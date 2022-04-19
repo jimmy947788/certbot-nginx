@@ -100,6 +100,7 @@ Found the following certs:
 上述資訊可看出憑證距離到期還有多久的時間
 
 ## 設置排程工作
+
 ```bash
 sudo crontab -e
 ```
@@ -109,20 +110,40 @@ sudo crontab -e
 $ certbot -q renew --deploy-hook 'service nginx reload'
 ```
 
-## 寫入排程規則
+## 1. 用 Crontab 更新憑證
 下方指令以固定每月1號進行 renew SSL 憑證為例，其中 --quiet 表不產生輸出結果
 ```bash
-0 0 1 * * /usr/bin/certbot renew --quiet 
+0 0 1 * * /usr/bin/certbot -q renew --deploy-hook 'service nginx reload'
 ```
 
-## 系統Timer更新
-查詢系統timer
+## 2.用Service Timer 更新
+
+1. 複製service檔案
+```bash
+$ sudo mv certbot.service /lib/systemd/system/certbot-renew.service
+$ sudo mv certbot.timer /lib/systemd/system/certbot-renew.timer
+```
+2.啟動service timer
+```bash
+$ sudo systemctl start certbot-renew.timer
+```
+3.查詢系統timer
 ```bash
 $ systemctl list-timers --all
 ```
-複製service檔案
+列出所有service timer，`certbot-renew.timer`就出現在下面。
 ```bash
-$ sudo mv certbot.service /lib/systemd/system/certbot.service
-$ sudo mv certbot.timer /lib/systemd/system/certbot.timer
-```
 
+NEXT                        LEFT          LAST                        PASSED       UNIT                         ACTIVATES
+Tue 2022-04-19 06:39:00 BST 7min left     Tue 2022-04-19 06:09:01 BST 22min ago    phpsessionclean.timer        phpsessionclean.service
+Tue 2022-04-19 06:44:03 BST 12min left    Mon 2022-04-18 06:48:29 BST 23h ago      apt-daily-upgrade.timer      apt-daily-upgrade.service
+Tue 2022-04-19 06:54:40 BST 23min left    Mon 2022-04-18 06:54:40 BST 23h ago      systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Tue 2022-04-19 07:30:23 BST 58min left    Mon 2022-04-18 23:34:22 BST 6h ago       anacron.timer                anacron.service
+Tue 2022-04-19 11:58:12 BST 5h 26min left Mon 2022-04-18 18:03:10 BST 12h ago      apt-daily.timer              apt-daily.service
+Tue 2022-04-19 22:09:41 BST 15h left      n/a                         n/a          certbot-renew.timer          certbot-renew.service
+Wed 2022-04-20 00:00:00 BST 17h left      Tue 2022-04-19 00:00:02 BST 6h ago       logrotate.timer              logrotate.service
+Wed 2022-04-20 00:00:00 BST 17h left      Tue 2022-04-19 00:00:02 BST 6h ago       man-db.timer                 man-db.service
+Sun 2022-04-24 03:10:54 BST 4 days left   Sun 2022-04-17 06:22:38 BST 2 days ago   e2scrub_all.timer            e2scrub_all.service
+Mon 2022-04-25 01:01:07 BST 5 days left   Mon 2022-04-18 00:39:33 BST 1 day 5h ago fstrim.timer                 fstrim.service
+
+```
