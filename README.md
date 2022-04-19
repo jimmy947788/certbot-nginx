@@ -34,18 +34,21 @@ $ sudo nginx -s reload  #重啟nginx
 $ sudo certbot --nginx -d mydomain.com -d www.mydomain.com
 ```
 
-驗證domain是否正確，要先去DNS設定好到這台主機的public IP。
+以下為輸出結果:
 ```bash
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator nginx, Installer nginx
+#驗證domain是否正確，要先去DNS設定好到這台主機的public IP。
 Requesting a certificate for www.mydomain.com
 Performing the following challenges:
 http-01 challenge for www.mydomain.com
 Waiting for verification...
 Cleaning up challenges
 ```
-更新`mydomain.com.conf`SSL區段
+以下為輸出結果:
+
 ```bash
+#更新`mydomain.com.conf`SSL區段
 Deploying Certificate to VirtualHost /etc/nginx/conf.d/mydomain.com.conf
 Redirecting all traffic on port 80 to ssl in /etc/nginx/conf.d/mydomain.com.conf
 
@@ -53,16 +56,16 @@ Redirecting all traffic on port 80 to ssl in /etc/nginx/conf.d/mydomain.com.conf
 Congratulations! You have successfully enabled https://www.mydomain.com
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ```
-
-顯示目前憑證和私要目錄，還有到期期限
+以下為輸出結果:
+，還有到期期限
 ```bash
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/mydomain.com/fullchain.pem
+   /etc/letsencrypt/live/mydomain.com/fullchain.pem #顯示此次申請憑證目錄
    Your key file has been saved at:
-   /etc/letsencrypt/live/mydomain.com/privkey.pem
-   Your certificate will expire on 2022-07-18. To obtain a new or
-   tweaked version of this certificate in the future, simply run
+   /etc/letsencrypt/live/mydomain.com/privkey.pem  #顯示此次申請私鑰目錄
+   Your certificate will expire on 2022-07-18. #顯示此次申請憑證到期日
+   To obtain a new or tweaked version of this certificate in the future, simply run
    certbot again with the "certonly" option. To non-interactively
    renew *all* of your certificates, run "certbot renew"
  - If you like Certbot, please consider supporting our work by:
