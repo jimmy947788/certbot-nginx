@@ -74,7 +74,13 @@ IMPORTANT NOTES:
    Donating to EFF:                    https://eff.org/donate-le
 ```
 
-## 更新 SSL certificates
+## 4.刪除憑證
+就是刪除憑證
+```bash
+$ sudo certbot delete --cert-name example.com
+```
+
+## 5.更新 SSL certificates
 
 測試取得憑證是否正常
 ```bash
