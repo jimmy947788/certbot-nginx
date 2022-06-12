@@ -3,8 +3,9 @@
 ## 1. 下載 Certbot
 ``` bash
 $ sudo apt-get update -y
+$ sudo apt-get install nginx
 $ sudo apt-get install certbot
-$ apt-get install python3-certbot-nginx
+$ sudo apt-get install python3-certbot-nginx
 ```
 
 ## 2. 設定 Nginx
