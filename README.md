@@ -85,7 +85,7 @@ $ sudo certbot delete --cert-name example.com
 
 測試取得憑證是否正常
 ```bash
-$ sudo cerbot renew --dry-run 
+$ sudo certbot renew --dry-run 
 ```
 > 移除--dry-run就正式取得
 
